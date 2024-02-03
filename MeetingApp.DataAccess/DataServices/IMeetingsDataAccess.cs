@@ -10,5 +10,6 @@ namespace MeetingApp.DataAccess.DataServices
     public interface IMeetingsDataAccess
     {
         List<Meetings> GetMeetingsFromDB();
+        string InsertMeetingRecordIntoDB(Meetings UserInput);
     }
 }

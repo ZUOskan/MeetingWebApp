@@ -10,5 +10,6 @@ namespace MeetingApp.BusinessLogic.LogicServices
     public interface IMeetingsLogic
     {
         List<Meetings> GetMeetingsListLogic();
+        string InsertMeetingRecordToDB(Meetings UserInput);
     }
 }

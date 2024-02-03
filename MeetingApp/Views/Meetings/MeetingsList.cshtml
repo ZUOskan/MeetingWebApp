@@ -1,0 +1,42 @@
+﻿@model MeetingApp.BusinessObject.EntityCommon.MeetingsModule;
+<div class="row"
+	<div class="col-lg-8">
+        <h3>Upcoming Meetings</h3>
+	</div>
+	<div class="col-lg-8">
+
+        <a href="@Url.Action("InsertMeeting", "Meetings")" class="btn btn-primary">Schedule A New Meeting</a>
+    </div>
+<div class="row">
+	<div class="col-lg-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">MeetingTitle</th>
+                    <th scope="col">MeetingStartDate</th>
+                    <th scope="col">MeetingFinishDate</th>
+                    <th scope="col">MeetingDescription</th>
+                    <th scope="col">MeetingDocument</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @{
+                    if(Model!=null && Model.meetingsList!=null && Model.meetingsList.Count()>0)
+                    {
+                        foreach (var item in Model.meetingsList)
+                        {
+                            <tr>
+                                <th scope="row">@item.MeetingTitle</th>
+                                <th scope="row">@item.MeetingStartDate</th>
+                                <th scope="row">@item.MeetingFinishDate</th>
+                                <th scope="row">@item.MeetingDescription</th>
+                                <th scope="row">@item.MeetingDocument</th>
+                            </tr>
+                        }
+                    }
+                }                
+            </tbody>
+        </table>
+	</div>
+</div>
