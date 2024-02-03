@@ -1,4 +1,5 @@
 using MeetingApp.BusinessLogic.LogicServices;
+using MeetingApp.DataAccess.DataContext;
 using MeetingApp.DataAccess.DataServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<IMeetingsLogic, MeetingsLogic>();
 builder.Services.AddSingleton<IMeetingsDataAccess, MeetingsDataAccess>();
+builder.Services.AddSingleton<IDapperOrmHelper, DapperOrmHelper>();
 
 var app = builder.Build();
 
