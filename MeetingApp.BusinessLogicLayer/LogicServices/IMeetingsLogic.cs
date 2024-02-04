@@ -10,7 +10,9 @@ namespace MeetingApp.BusinessLogic.LogicServices
     public interface IMeetingsLogic
     {
         List<Meetings> GetMeetingsListLogic(String UserID);
-        string InsertMeetingRecordToDBLogic(string UserID, Meetings UserInput);
+        Meetings GetMeetingsByIDLogic(string UserID, int MeetingID);
+
+		string InsertMeetingRecordToDBLogic(string UserID, Meetings UserInput, int MeetingID = -1);
         string DeleteMeetingRecordFromDBLogic(int MeetingID);
 
 	}

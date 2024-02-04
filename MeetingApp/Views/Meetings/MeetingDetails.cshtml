@@ -18,7 +18,7 @@
 
 <div class="row">
 	<div class="col-lg-8">
-        <form asp-controller="Meetings" asp-action="PostMeeting">
+        <form asp-controller="Meetings" asp-action="PostMeeting" enctype="multipart/form-data" asp-route-MeetingID="@Model.MeetingID">
             <div class="form-group">
                 <label for="MeetingTitle">Title</label>
                 <input type="text" class="form-control" id="MeetingTitle" name="MeetingTitle" value="@Model.MeetingTitle" required>
@@ -40,8 +40,8 @@
 			</div>
 
 			<div class="form-group">
-                <label for="MeetingDocument">Document?????</label>
-				<input type="file" class="form-control" id="MeetingDocument" name="MeetingDocument" value="@Model.MeetingDocument">
+                <label for="MeetingDocument">Document</label>
+                <input type="file" class="form-control" id="MeetingDocument" name="MeetingDocument" value="@Model.MeetingDocumentName">
 			</div>
 
 			<button type="submit" class="btn btn-primary">Update</button>

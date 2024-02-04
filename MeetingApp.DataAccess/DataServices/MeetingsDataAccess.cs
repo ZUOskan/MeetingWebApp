@@ -46,7 +46,31 @@ namespace MeetingApp.DataAccess.DataServices
             return meetings;
         }
 
-        public string InsertMeetingRecordIntoDB(string UserID, Meetings UserInput)
+
+		public Meetings GetMeetingsFromDBByID(string UserID, int MeetingID)
+		{
+			Meetings meeting = new Meetings();
+
+			try
+			{
+				using (IDbConnection dbConnection = _dapperOrmHelper.GetDapperContextHelper())
+				{
+
+					string SqlQuery = "SELECT * FROM MeetingManagement.Meetings" +
+						" WHERE MeetingOwner = '" + UserID + "' AND MeetingID = '" + MeetingID + "'";
+
+                    meeting = dbConnection.QuerySingle<Meetings>(SqlQuery, commandType: CommandType.Text);
+				}
+			}
+			catch (Exception ex)
+			{
+				string message = ex.Message;
+			}
+
+			return meeting;
+		}
+
+		public string InsertMeetingRecordIntoDB(string UserID, Meetings UserInput, int MeetingID = -1)
         {
             string result = string.Empty;
 
@@ -54,15 +78,28 @@ namespace MeetingApp.DataAccess.DataServices
             {
                 using (IDbConnection dbConnection = _dapperOrmHelper.GetDapperContextHelper())
                 {
-                    string SqlQuery = @"INSERT INTO MeetingManagement.Meetings(MeetingTitle, MeetingStartDate, MeetingFinishDate, MeetingDescription, MeetingDocument, MeetingOwner)VALUES(@MeetingTitle, @MeetingStartDate, @MeetingFinishDate, @MeetingDescription, @MeetingDocument, @MeetingOwner)";
+                    string SqlQuery = string.Empty;
+                    if (MeetingID != -1)
+                    {
+                        SqlQuery = @"UPDATE  MeetingManagement.Meetings
+                                          SET MeetingTitle = @MeetingTitle, MeetingStartDate = @MeetingStartDate, MeetingFinishDate = @MeetingFinishDate, MeetingDescription = @MeetingDescription, MeetingDocumentName = @MeetingDocumentName, MeetingDocumentContent = @MeetingDocumentContent, MeetingOwner = @MeetingOwner
+                                          WHERE MeetingID =" + MeetingID;
+                    }
+                    else
+                    {
+                        SqlQuery = @"INSERT INTO MeetingManagement.Meetings(MeetingTitle, MeetingStartDate, MeetingFinishDate, MeetingDescription, MeetingDocumentName, MeetingDocumentContent, MeetingOwner)
+                                          VALUES(@MeetingTitle, @MeetingStartDate, @MeetingFinishDate, @MeetingDescription, @MeetingDocumentName, @MeetingDocumentContent, @MeetingOwner)";
+                    }
+
                     dbConnection.Execute(SqlQuery,
                         new
                         {
                             MeetingTitle = UserInput.MeetingTitle != null ? UserInput.MeetingTitle : default(string),
-                            MeetingStartDate= UserInput.MeetingStartDate,
+                            MeetingStartDate = UserInput.MeetingStartDate,
                             MeetingFinishDate = UserInput.MeetingFinishDate,
                             MeetingDescription = UserInput.MeetingDescription.ToString() != null ? UserInput.MeetingDescription.ToString() : default(string),
-                            MeetingDocument = UserInput.MeetingDocument != null ? UserInput.MeetingDocument.ToString() : default(string), 
+                            MeetingDocumentName = UserInput.MeetingDocumentName.ToString() != null ? UserInput.MeetingDocumentName.ToString() : default(string),
+                            MeetingDocumentContent = UserInput.MeetingDocumentContent != null ? UserInput.MeetingDocumentContent : default(byte[]), 
                             MeetingOwner = UserID
                         }, commandType: CommandType.Text);
                     result = "Meeting successfully recorded to the database.";

@@ -10,7 +10,8 @@ namespace MeetingApp.DataAccess.DataServices
     public interface IMeetingsDataAccess
     {
         List<Meetings> GetMeetingsFromDB(string UserID);
-        string InsertMeetingRecordIntoDB(string UserID, Meetings UserInput);
+        Meetings GetMeetingsFromDBByID(string UserID, int MeetingID);
+		string InsertMeetingRecordIntoDB(string UserID, Meetings UserInput, int MeetingID = -1);
         string DeleteMeetingRecordFromDB(int MeetingID);
 
 

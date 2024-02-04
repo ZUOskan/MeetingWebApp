@@ -24,22 +24,40 @@ namespace MeetingApp.BusinessLogic.LogicServices
             output = _meetingsDataAccess.GetMeetingsFromDB(UserID);
             return output;
         }
+		public Meetings GetMeetingsByIDLogic(string UserID, int MeetingID)
+		{
+			Meetings output = new Meetings();
 
-        public string InsertMeetingRecordToDBLogic(string UserID, Meetings UserInput)
+			output = _meetingsDataAccess.GetMeetingsFromDBByID(UserID, MeetingID);
+			return output;
+		}
+
+
+		public string InsertMeetingRecordToDBLogic(string UserID, Meetings UserInput, int MeetingID = -1)
         {
             string result = string.Empty;
-            if  (UserInput.MeetingStartDate.Date <  DateTime.Now.Date) 
-            {
-                result = "Start date cannot be earlier than today.";
-                return result;
-            }
+
+            
+            //if  (UserInput.MeetingStartDate.Date <  DateTime.Now.Date) 
+            //{
+            //    result = "Start date cannot be earlier than today.";
+            //    return result;
+            //}
+
             if (UserInput.MeetingStartDate > UserInput.MeetingFinishDate)
             {
                 result = "Start date cannot be later than finish date";
                 return result;
             }
+            if (MeetingID != -1)
+            {
+                result = _meetingsDataAccess.InsertMeetingRecordIntoDB(UserID, UserInput, MeetingID);
+            }
+            else
+            {
+                result = _meetingsDataAccess.InsertMeetingRecordIntoDB(UserID, UserInput);
+            }
 
-            result = _meetingsDataAccess.InsertMeetingRecordIntoDB(UserID, UserInput);
             if (result == "Meeting successfully recorded to the database.")
             {
                 return result;
