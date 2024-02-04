@@ -23,7 +23,7 @@ namespace MeetingApp.DataAccess.DataServices
             _dapperOrmHelper = dapperOrmHelper;
         }
 
-        public List<Meetings> GetMeetingsFromDB()
+        public List<Meetings> GetMeetingsFromDB(string UserID)
         {
             List<Meetings> meetings = new List<Meetings>();
 
@@ -31,7 +31,10 @@ namespace MeetingApp.DataAccess.DataServices
             {
                 using (IDbConnection dbConnection = _dapperOrmHelper.GetDapperContextHelper())
                 {
-                    string SqlQuery = "SELECT * FROM MeetingManagement.Meetings";
+                    
+                    string SqlQuery = "SELECT * FROM MeetingManagement.Meetings" +
+                        " WHERE MeetingOwner = '" + UserID + "'";
+
                     meetings = dbConnection.Query<Meetings>(SqlQuery, commandType: CommandType.Text).ToList();
                 }
             }
@@ -43,7 +46,7 @@ namespace MeetingApp.DataAccess.DataServices
             return meetings;
         }
 
-        public string InsertMeetingRecordIntoDB(Meetings UserInput)
+        public string InsertMeetingRecordIntoDB(string UserID, Meetings UserInput)
         {
             string result = string.Empty;
 
@@ -51,7 +54,7 @@ namespace MeetingApp.DataAccess.DataServices
             {
                 using (IDbConnection dbConnection = _dapperOrmHelper.GetDapperContextHelper())
                 {
-                    string SqlQuery = @"INSERT INTO MeetingManagement.Meetings(MeetingTitle, MeetingStartDate, MeetingFinishDate, MeetingDescription, MeetingDocument)VALUES(@MeetingTitle, @MeetingStartDate, @MeetingFinishDate, @MeetingDescription, @MeetingDocument)";
+                    string SqlQuery = @"INSERT INTO MeetingManagement.Meetings(MeetingTitle, MeetingStartDate, MeetingFinishDate, MeetingDescription, MeetingDocument, MeetingOwner)VALUES(@MeetingTitle, @MeetingStartDate, @MeetingFinishDate, @MeetingDescription, @MeetingDocument, @MeetingOwner)";
                     dbConnection.Execute(SqlQuery,
                         new
                         {
@@ -60,6 +63,7 @@ namespace MeetingApp.DataAccess.DataServices
                             MeetingFinishDate = UserInput.MeetingFinishDate,
                             MeetingDescription = UserInput.MeetingDescription.ToString() != null ? UserInput.MeetingDescription.ToString() : default(string),
                             MeetingDocument = UserInput.MeetingDocument != null ? UserInput.MeetingDocument.ToString() : default(string), 
+                            MeetingOwner = UserID
                         }, commandType: CommandType.Text);
                     result = "Meeting successfully recorded to the database.";
                 }
@@ -70,5 +74,28 @@ namespace MeetingApp.DataAccess.DataServices
             }
             return result;
         }
-    }
+		public string DeleteMeetingRecordFromDB(int MeetingID)
+		{
+			string result = string.Empty;
+
+			try
+			{
+				using (IDbConnection dbConnection = _dapperOrmHelper.GetDapperContextHelper())
+				{
+					string SqlQuery = @"DELETE FROM MeetingManagement.Meetings WHERE MeetingID = @MeetingID";
+					dbConnection.Execute(SqlQuery,
+						new
+						{
+							MeetingID = MeetingID != null ? MeetingID : default(int)
+						}, commandType: CommandType.Text);
+					result = "Meeting successfully deleted from the database.";
+				}
+			}
+			catch (Exception ex)
+			{
+				string message = ex.Message;
+			}
+			return result;
+		}
+	}
 }

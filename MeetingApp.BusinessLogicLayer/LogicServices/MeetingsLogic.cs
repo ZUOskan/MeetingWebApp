@@ -17,15 +17,15 @@ namespace MeetingApp.BusinessLogic.LogicServices
             _meetingsDataAccess = meetingsDataAccess;
         }   
 
-        public List <Meetings> GetMeetingsListLogic()
+        public List <Meetings> GetMeetingsListLogic(string UserID)
         { 
             List <Meetings> output = new List<Meetings> ();
 
-            output = _meetingsDataAccess.GetMeetingsFromDB();
+            output = _meetingsDataAccess.GetMeetingsFromDB(UserID);
             return output;
         }
 
-        public string InsertMeetingRecordToDB(Meetings UserInput)
+        public string InsertMeetingRecordToDBLogic(string UserID, Meetings UserInput)
         {
             string result = string.Empty;
             if  (UserInput.MeetingStartDate.Date <  DateTime.Now.Date) 
@@ -39,7 +39,7 @@ namespace MeetingApp.BusinessLogic.LogicServices
                 return result;
             }
 
-            result = _meetingsDataAccess.InsertMeetingRecordIntoDB(UserInput);
+            result = _meetingsDataAccess.InsertMeetingRecordIntoDB(UserID, UserInput);
             if (result == "Meeting successfully recorded to the database.")
             {
                 return result;
@@ -51,13 +51,21 @@ namespace MeetingApp.BusinessLogic.LogicServices
             }
         }
 
-
-        //Usersa taşınacak
-        private static bool IsEmailValid(string email)
+		public string DeleteMeetingRecordFromDBLogic(int MeetingID)
         {
-            string regex = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+            string result = string.Empty;
+			result = _meetingsDataAccess.DeleteMeetingRecordFromDB(MeetingID);
+			if (result == "Meeting successfully deleted from the database.")
+			{
+				return result;
+			}
+			else
+			{
+				result = "There was an error deleting the meeting.";
+				return result;
+			}
+		}
 
-            return Regex.IsMatch(email, regex, RegexOptions.IgnoreCase);
-        }
-    }
+
+	}
 }

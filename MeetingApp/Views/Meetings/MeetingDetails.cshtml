@@ -1,0 +1,52 @@
+﻿@model MeetingApp.BusinessObject.Entity.Meetings;
+<div>
+	<h3>Meeting Details</h3>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        @{
+            if (TempData["ErrorTemp"]!=null)
+            {
+                <div class="alert alert-warning" role="alert">
+                @TempData["ErrorTemp"]
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-lg-8">
+        <form asp-controller="Meetings" asp-action="PostMeeting">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Title</label>
+                <input type="text" class="form-control" id="MeetingTitle" name="MeetingTitle" value="@Model.MeetingTitle" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Starting Date</label>
+                <input type="datetime-local" class="form-control" id="MeetingStartDate" name="MeetingStartDate" value="@Model.MeetingStartDate.ToString("yyyy-MM-ddTHH:mm")" required>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleInputEmail1">Finishing Date </label>
+                <input type="datetime-local" class="form-control" id="MeetingFinishDate" name="MeetingFinishDate" value="@Model.MeetingFinishDate.ToString("yyyy-MM-ddTHH:mm")" required>
+            </div>
+
+            <div class="form-group">
+				<label for="exampleInputEmail1">Description</label>
+				<input type="text" class="form-control" id="MeetingDescription" name="MeetingDescription" value="@Model.MeetingDescription">
+			</div>
+
+			<div class="form-group">
+				<label for="exampleInputEmail1">Document?????</label>
+				<input type="file" class="form-control" id="MeetingDocument" name="MeetingDocument" value="@Model.MeetingDocument">
+			</div>
+
+			<button type="submit" class="btn btn-primary">Update</button>
+            <a href="@Url.Action("DeleteMeeting", "Meetings", new { MeetingID = @Model.MeetingID })" class="btn btn-primary">Delete</a>
+		</form>
+	</div>
+</div>
+

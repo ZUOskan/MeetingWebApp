@@ -5,38 +5,45 @@
 	</div>
 	<div class="col-lg-8">
 
-        <a href="@Url.Action("InsertMeeting", "Meetings")" class="btn btn-primary">Schedule A New Meeting</a>
+		<a href="@Url.Action("InsertMeeting", "Meetings")" class="btn btn-primary">Schedule A New Meeting</a>
     </div>
 <div class="row">
 	<div class="col-lg-8">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">MeetingTitle</th>
-                    <th scope="col">MeetingStartDate</th>
-                    <th scope="col">MeetingFinishDate</th>
-                    <th scope="col">MeetingDescription</th>
-                    <th scope="col">MeetingDocument</th>
-                </tr>
-            </thead>
-            <tbody>
+					<th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">StartDate</th>
+                    <th scope="col">FinishDate</th>
+                    <th scope="col">Description</th>
+					<th scope="col">Document</th>
+				</tr>
+			</thead>
+			<tbody>
 
-                @{
-                    if(Model!=null && Model.meetingsList!=null && Model.meetingsList.Count()>0)
-                    {
-                        foreach (var item in Model.meetingsList)
-                        {
-                            <tr>
-                                <th scope="row">@item.MeetingTitle</th>
-                                <th scope="row">@item.MeetingStartDate</th>
-                                <th scope="row">@item.MeetingFinishDate</th>
-                                <th scope="row">@item.MeetingDescription</th>
-                                <th scope="row">@item.MeetingDocument</th>
-                            </tr>
-                        }
-                    }
-                }                
-            </tbody>
-        </table>
+					@{
+						if (Model != null && Model.meetingsList != null && Model.meetingsList.Count() > 0)
+						{
+							foreach (var item in Model.meetingsList)
+							{
+										<tr>
+											<th scope="row">@item.MeetingID</th>
+											<th scope="row">@item.MeetingTitle</th>
+											<th scope="row">@item.MeetingStartDate</th>
+											<th scope="row">@item.MeetingFinishDate</th>
+											<th scope="row">@item.MeetingDescription</th>
+											<th scope="row">@item.MeetingDocument</th>											
+											<td>
+														<a href="@Url.Action("MeetingDetails", "Meetings", new {MeetingID = item.MeetingID})" class="btn btn-primary">
+											Details
+											</a>
+											</td>
+										</tr>
+							}
+						}
+					}
+				</tbody>
+		</table>
 	</div>
 </div>

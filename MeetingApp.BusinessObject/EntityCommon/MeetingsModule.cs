@@ -9,7 +9,6 @@ namespace MeetingApp.BusinessObject.EntityCommon
 {
     public class MeetingsModule
     {
-        public List<Users>? usersList { get; set; }
         public List<Meetings>? meetingsList {  get; set; }
     }
 }

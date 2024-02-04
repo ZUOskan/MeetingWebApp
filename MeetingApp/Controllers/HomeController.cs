@@ -1,9 +1,11 @@
 ﻿using MeetingApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace MeetingApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,7 +17,7 @@ namespace MeetingApp.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("MeetingsList", "Meetings");
         }
 
         public IActionResult Privacy()
