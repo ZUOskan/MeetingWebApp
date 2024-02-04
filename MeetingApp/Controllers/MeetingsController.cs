@@ -42,7 +42,7 @@ namespace MeetingApp.Controllers
 
         [HttpPost]
         [ActionName("PostMeeting")]
-        public IActionResult PostMeeting(Meetings UserInput)
+        public IActionResult PostMeeting(Meetings UserInput, IFormFile file)
         {
             string UserID = _userManager.GetUserId(this.User);
             //Insert the meeting into the DB

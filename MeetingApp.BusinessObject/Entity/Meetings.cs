@@ -14,7 +14,7 @@ namespace MeetingApp.BusinessObject.Entity
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-ddTHH:mm}")] public DateTime MeetingStartDate { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-ddTHH:mm}")] public DateTime MeetingFinishDate { get; set; }
         public string MeetingDescription { get; set; }
-        public string MeetingDocument { get; set; }
+        public byte[]? MeetingDocument { get; set; }
         public string MeetingOwner{ get; set; }
 
     }

@@ -20,27 +20,27 @@
     <div class="col-lg-8">
         <form asp-controller="Meetings" asp-action="DeleteMeetingConfirmed" asp-route-MeetingID="@Model.MeetingID">
             <div class="form-group">
-                <label for="exampleInputEmail1">Title</label>
+                <label for="MeetingTitle">Title</label>
                 <input type="text" class="form-control" id="MeetingTitle" name="MeetingTitle" value="@Model.MeetingTitle" readonly >
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Starting Date</label>
+                <label for="MeetingStartDate">Starting Date</label>
                 <input type="datetime-local" class="form-control" id="MeetingStartDate" name="MeetingStartDate" value="@Model.MeetingStartDate.ToString("yyyy-MM-ddTHH:mm")" readonly>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Finishing Date </label>
+                <label for="MeetingFinishDate">Finishing Date </label>
                 <input type="datetime-local" class="form-control" id="MeetingFinishDate" name="MeetingFinishDate" value="@Model.MeetingFinishDate.ToString("yyyy-MM-ddTHH:mm")" readonly>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Description</label>
+                <label for="MeetingDescription">Description</label>
                 <input type="text" class="form-control" id="MeetingDescription" name="MeetingDescription" value="@Model.MeetingDescription" readonly>
             </div>
 
             <div class="form-group">
-                <label for="exampleInputEmail1">Document?????</label>
+                <label for="MeetingDocument">Document?????</label>
                 <input type="file" class="form-control" id="MeetingDocument" name="MeetingDocument" value="@Model.MeetingDocument" readonly>
             </div>
 
